@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Student Registration | WS 301 Performance Task</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header class="page-header">x
+        <div class="page-header__inner">
+            <h1>Student registration</h1>
+            <p>Fill in every field. Errors appear beside the field that needs fixing.</p>
+        </div>
+    </header>
+
+    <main class="page-main">
+        <!-- Success message: hidden until every field is valid -->
+        <div id="successMessage" class="success-banner" role="status" aria-live="polite" hidden>
+            <strong id="successTitle">Registration successful!</strong>
+            <span id="successDetail"></span>
+        </div>
+
+        <!-- novalidate: the browser's built-in bubbles are turned off so our own messages are used -->
+        <form id="registrationForm" class="card" novalidate>
+
+            <fieldset class="group">
+                <legend>Student details</legend>
+
+                <div class="field">
+                    <label for="studentId">Student ID</label>
+                    <input type="text" id="studentId" name="studentId" placeholder="2026-0001" autocomplete="off" inputmode="numeric" data-label="Student ID" data-format="YYYY-NNNN (for example 2026-0001)">
+                    <p class="error-message" id="studentId-error" aria-live="polite"></p>
+                </div>
+
+                <div class="field">
+                    <label for="fullName">Full name</label>
+                    <input type="text" id="fullName" name="fullName" placeholder="Juan Dela Cruz" autocomplete="name" data-label="Full name" data-min-words="2">
+                    <p class="error-message" id="fullName-error" aria-live="polite"></p>
+                </div>
+
+                <div class="field">
+                    <label for="dob">Date of birth</label>
+                    <input type="date" id="dob" name="dob" data-label="Date of birth" data-min-age="15">
+                    <p class="hint">You must be at least 15 years old.</p>
+                    <p class="error-message" id="dob-error" aria-live="polite"></p>
+                </div>
+
+                <div class="field" id="genderGroup" role="radiogroup" aria-labelledby="genderLabel" data-label="Gender">
+                    <span class="label" id="genderLabel">Gender</span>
+                    <div class="choice-row">
+                        <label class="choice"><input type="radio" name="gender" value="Female"> Female</label>
+                        <label class="choice"><input type="radio" name="gender" value="Male"> Male</label>
+                        <label class="choice"><input type="radio" name="gender" value="Other"> Other</label>
+                        <label class="choice"><input type="radio" name="gender" value="Prefer not to say"> Prefer not to say</label>
+                    </div>
+                    <p class="error-message" id="gender-error" aria-live="polite"></p>
+                </div>
+            </fieldset>
+
+            <fieldset class="group">
+                <legend>Contact</legend>
+
+                <div class="field">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="juan@school.edu.ph" autocomplete="email" data-label="Email address">
+                    <p class="error-message" id="email-error" aria-live="polite"></p>
+                </div>
+
+                <div class="field">
+                    <label for="phone">Phone number</label>
+                    <input type="tel" id="phone" name="phone" placeholder="0917-123-4567" autocomplete="tel" inputmode="numeric" data-label="Phone number" data-format="09XX-XXX-XXXX">
+                    <p class="hint">Format: 09XX-XXX-XXXX. Dashes are added for you.</p>
+                    <p class="error-message" id="phone-error" aria-live="polite"></p>
+                </div>
+
+                <div class="field field--wide">
+                    <label for="address">Address</label>
+                    <textarea id="address" name="address" rows="3" placeholder="House no., street, barangay, city, province" autocomplete="street-address" data-label="Address" data-min-length="10" data-max-length="200"></textarea>
+                    <p class="counter" id="addressCount">0 / 200</p>
+                    <p class="error-message" id="address-error" aria-live="polite"></p>
+                </div>
+            </fieldset>
+
+            <fieldset class="group">
+                <legend>Academic</legend>
+
+                <div class="field">
+                    <label for="program">Program</label>
+                    <select id="program" name="program" data-label="Program">
+            <option value="">Select a program</option>
+            <option value="BSIT" data-years="4">BS Information Technology (4 years)</option>
+            <option value="BSCpE" data-years="5">BS Computer Engineering (5 years)</option>
+            <option value="BSN" data-years="4">BS Nursing (4 years)</option>
+            <option value="BSA" data-years="5">BS Accountancy (5 years)</option>
+            <option value="BSEd" data-years="4">BS Education (4 years)</option>
+            <option value="BSBA" data-years="4">BS Business Administration (4 years)</option>
+          </select>
+                    <p class="error-message" id="program-error" aria-live="polite"></p>
+                </div>
+
+                <div class="field">
+                    <label for="yearLevel">Year level</label>
+                    <select id="yearLevel" name="yearLevel" data-label="Year level">
+            <option value="">Select a year level</option>
+            <option value="1">1st year</option>
+            <option value="2">2nd year</option>
+            <option value="3">3rd year</option>
+            <option value="4">4th year</option>
+            <option value="5">5th year</option>
+          </select>
+                    <p class="hint" id="yearHint">Pick a program first. Year levels adjust to its length.</p>
+                    <p class="error-message" id="yearLevel-error" aria-live="polite"></p>
+                </div>
+            </fieldset>
+
+            <fieldset class="group">
+                <legend>Account</legend>
+
+                <div class="field">
+                    <label for="password">Password</label>
+                    <div class="input-with-button">
+                        <input type="password" id="password" name="password" autocomplete="new-password" data-label="Password" data-min-length="8">
+                        <button type="button" id="togglePassword" class="ghost-btn" aria-controls="password confirmPassword" aria-pressed="false">Show</button>
+                    </div>
+                    <div class="strength" id="strengthMeter" data-strength="empty" aria-hidden="true">
+                        <span class="strength__bar"></span>
+                        <span class="strength__text" id="strengthText">Strength: not entered</span>
+                    </div>
+                    <p class="hint">At least 8 characters with an uppercase letter, a lowercase letter and a number.</p>
+                    <p class="error-message" id="password-error" aria-live="polite"></p>
+                </div>
+
+                <div class="field">
+                    <label for="confirmPassword">Confirm password</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" autocomplete="new-password" data-label="Confirm password">
+                    <p class="error-message" id="confirmPassword-error" aria-live="polite"></p>
+                </div>
+            </fieldset>
+
+            <div class="field field--wide agreement" id="agreementGroup" data-label="Agreement">
+                <label class="choice">
+          <input type="checkbox" id="agreement" name="agreement">
+          I confirm that the information above is correct and I agree to the school's terms and privacy policy.
+        </label>
+                <p class="error-message" id="agreement-error" aria-live="polite"></p>
+            </div>
+
+            <div class="actions">
+                <button type="submit" class="btn btn--primary">Register</button>
+                <button type="reset" class="btn btn--secondary">Reset form</button>
+            </div>
+        </form>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
